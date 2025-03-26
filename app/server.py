@@ -9,7 +9,7 @@ import base64
 import binascii
 import math
 import argparse
-from waggle.plugin import Plugin
+from waggle.plugin import Plugin # Not used but can be if we want to publish the measurements being sent back to the field tester 
 
 from yaml.loader import SafeLoader
 from paho.mqtt.client import Client
