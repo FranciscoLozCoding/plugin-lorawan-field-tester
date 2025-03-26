@@ -1,7 +1,3 @@
-# -------------------------------------------------------------------------------
-# Implementation of Paul's (@disk91) & RakWireless field tester server in Python3
-# -------------------------------------------------------------------------------
-
 import os
 import sys
 import time
@@ -17,8 +13,6 @@ from waggle.plugin import Plugin
 
 from yaml.loader import SafeLoader
 from paho.mqtt.client import Client
-
-#TODO: refactor this code to work with waggle plugin system, remove any code that you don't need
 
 class Config():
 
