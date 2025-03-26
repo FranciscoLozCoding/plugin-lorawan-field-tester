@@ -1,0 +1,8 @@
+pywaggle==0.55.*
+multipledispatch==1.0.*
+flatdict==4.0.*
+future==1.0.*
+iso8601==2.1.*
+paho-mqtt==2.1.*
+pyparsing==3.2.*
+PyYAML==6.0.*
