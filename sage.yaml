@@ -1,0 +1,13 @@
+name: "lorawan-field-tester"
+description: "An app to test lorawan signal strength using RAK10701 or compatible device."
+keywords: "LoRaWAN"
+authors: "Francisco Lozano"
+collaborators: ""
+funding: ""
+license: ""
+homepage: "https://github.com/FranciscoLozCoding/plugin-lorawan-field-tester"
+source:
+  architectures:
+    - "linux/amd64"
+    - "linux/arm64"
+version: "0.0.1"
