@@ -1,6 +1,6 @@
 ## About The Plugin
 
-The Field Tester Server is a plugin that processes and forwards coverage data from the [RAK10701]((https://store.rakwireless.com/products/field-tester-for-lorawan-rak10701)) Field Tester or compatible LoRaWAN devices. It connects directly to your LoRa Network Server (e.g. Chirpstack) via MQTT, parses incoming uplink messages, calculates key metrics such as distance, and generates the appropriate downlink message to send back to the device through MQTT. It also optionally publishes results to the Beehive.
+The Field Tester Server is a plugin that processes and forwards coverage data from the [RAK10701](https://store.rakwireless.com/products/field-tester-for-lorawan-rak10701) Field Tester or compatible LoRaWAN devices. It connects directly to your LoRa Network Server (e.g. Chirpstack) via MQTT, parses incoming uplink messages, calculates key metrics such as distance, and generates the appropriate downlink message to send back to the device through MQTT. It also optionally publishes results to the Beehive.
 
 ## Using the code
 
