@@ -169,7 +169,7 @@ def process(data, port, sequence_id, gateways, config):
         output['latitude'] = latSign * (encLat * 108 + 53) / 10000000
         output['longitude'] = lonSign * (encLon * 215 + 107) / 10000000
         output['altitude'] = ((data[6]<<8) + data[7]) - 1000
-        output['accuracy']: (output['hdop'] * 5 + 5) / 10
+        output['accuracy'] = (output['hdop'] * 5 + 5) / 10
 
     # Build gateway data
     output['num_gateways'] = len(gateways)
