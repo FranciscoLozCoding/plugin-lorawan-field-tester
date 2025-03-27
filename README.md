@@ -2,7 +2,7 @@
 
 ## About The Plugin
 
-The Lorawan Field Tester Server is a plugin that processes and forwards coverage data from the [RAK10701]((https://store.rakwireless.com/products/field-tester-for-lorawan-rak10701)) Field Tester or compatible LoRaWAN devices. It connects directly to your LoRa Network Server (e.g. Chirpstack) via MQTT, parses incoming uplink messages, calculates key metrics such as distance and signal strength, and optionally publishes results to the Beehive (SAGE portal). It also generates appropriate downlink messages and sends them back to the device through MQTT. This plugin is an implementation of [Paul Pinault’s backend service](https://github.com/disk91/WioLoRaWANFieldTester/blob/master/doc/DEVELOPMENT.md), adapted for the SAGE/Waggle ecosystem.
+The Lorawan Field Tester Server is a plugin that processes and forwards coverage data from the [RAK10701](https://store.rakwireless.com/products/field-tester-for-lorawan-rak10701) Field Tester or compatible LoRaWAN devices. It connects directly to your LoRa Network Server (e.g. Chirpstack) via MQTT, parses incoming uplink messages, calculates key metrics such as distance and signal strength, and optionally publishes results to the Beehive (SAGE portal). It also generates appropriate downlink messages and sends them back to the device through MQTT. This plugin is an implementation of [Paul Pinault’s backend service](https://github.com/disk91/WioLoRaWANFieldTester/blob/master/doc/DEVELOPMENT.md), adapted for the SAGE/Waggle ecosystem.
 
 ## Using the code
 
