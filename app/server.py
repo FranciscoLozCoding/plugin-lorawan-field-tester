@@ -7,13 +7,18 @@ import base64
 import binascii
 import math
 import argparse
-from waggle.plugin import Plugin # Not used but can be if we want to publish the measurements being sent back to the field tester 
+from waggle.plugin import Plugin
 from paho.mqtt.client import Client
 
 class Config:
     def __init__(self):
         parser = argparse.ArgumentParser()
-
+        parser.add_argument(
+            "--publish",
+            action="store_true",
+            default=False,
+            help="enable publish mode where field test measurements will be broadcast to Beehive",
+        )
         parser.add_argument(
             "--logging_level",
             default=os.getenv("LOGGING_LEVEL", logging.DEBUG),
@@ -107,6 +112,16 @@ class MQTTClient(Client):
     def start(self):
         self.loop_start()
 
+def publish(measurement: dict, timestamp = time.time(), metadata = {}):
+    if measurement["value"] is not None: #avoid NULLs
+        with Plugin() as plugin: #publish lorawan data
+            try:
+                plugin.publish(measurement["name"], measurement["value"], timestamp=timestamp, meta=metadata)
+                # If the function succeeds, log a success message
+                logging.info(f'[PUBLISH] {measurement["name"]} published')
+            except Exception as e:
+                # If an exception is raised, log an error message
+                logging.error(f'[PUBLISH] measurement {measurement["name"]} did not publish encountered an error: {str(e)}')
 
 EARTH_RADIUS = 6371000
 
@@ -136,7 +151,7 @@ MIN_DISTANCE=0
 MAX_RSSI=200
 MIN_RSSI=-200
 
-def process(data, port, sequence_id, gateways):
+def process(data, port, sequence_id, gateways, config):
 
     output = {}
 
@@ -172,6 +187,20 @@ def process(data, port, sequence_id, gateways):
                 distance = int(circleDistance(output, gateway['location'])) 
                 output['min_distance'] = min(output['min_distance'], distance)
                 output['max_distance'] = max(output['max_distance'], distance)
+
+    # Publish data to beehive
+    if config.get('publish'):
+        publish({'name': 'gps.hdop', 'value': output.get('hdop', None)})
+        publish({'name': 'gps.sats', 'value': output.get('sats', None)})
+        publish({'name': 'gps.latitude', 'value': output.get('latitude', None)})
+        publish({'name': 'gps.longitude', 'value': output.get('longitude', None)})
+        publish({'name': 'gps.altitude', 'value': output.get('altitude', None)})
+        publish({'name': 'gps.accuracy', 'value': output.get('accuracy', None)})
+        publish({'name': 'gateway.min_distance', 'value': output.get('min_distance', None)})
+        publish({'name': 'gateway.max_distance', 'value': output.get('max_distance', None)})
+        publish({'name': 'gateway.min_rssi', 'value': output.get('min_rssi', None)})
+        publish({'name': 'gateway.max_rssi', 'value': output.get('max_rssi', None)})
+        publish({'name': 'gateway.num_gateways', 'value': output.get('num_gateways', None)})
 
     # Build response buffer
     if 1 == port:
@@ -225,7 +254,7 @@ def parser_tts3(config, topic, payload):
     logging.debug("[TTS3] Received: 0x%s" % binascii.hexlify(data).decode('utf-8'))
     
     # Process the data
-    data = process(data, port, sequence_id, gateways)
+    data = process(data, port, sequence_id, gateways, config)
     if not data:
         return [False, False]
     logging.debug("[TTS3] Processed: %s" % data)
@@ -270,7 +299,7 @@ def parser_cs34(config, topic, payload):
     logging.debug("[CS34] Received: 0x%s" % binascii.hexlify(data).decode('utf-8'))
     
     # Process the data
-    data = process(data, port, sequence_id, gateways)
+    data = process(data, port, sequence_id, gateways, config)
     if not data:
         return [False, False]
     logging.debug("[CS34] Processed: %s" % data)
