@@ -4,7 +4,7 @@ keywords: "LoRaWAN"
 authors: "Francisco Lozano"
 collaborators: ""
 funding: ""
-license: ""
+license: "Apache 2.0"
 homepage: "https://github.com/FranciscoLozCoding/plugin-lorawan-field-tester"
 source:
   architectures:
