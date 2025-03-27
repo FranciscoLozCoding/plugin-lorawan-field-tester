@@ -1,8 +1,6 @@
 import os
 import sys
 import time
-import flatdict
-import yaml
 import logging
 import json
 import base64
@@ -10,27 +8,7 @@ import binascii
 import math
 import argparse
 from waggle.plugin import Plugin # Not used but can be if we want to publish the measurements being sent back to the field tester 
-
-from yaml.loader import SafeLoader
 from paho.mqtt.client import Client
-
-class Config():
-
-    _data = {}
-
-    def __init__(self):
-        try:
-            with open("config.yml", "r") as f:
-                self._data =  flatdict.FlatDict(yaml.load(f, Loader=SafeLoader), delimiter='.')
-        except FileNotFoundError: 
-            None
-
-    def get(self, name, default=None):
-        env_name = name.upper().replace('.', '_').replace('-', '_')
-        value = os.environ.get(env_name)
-        if value:
-            return value
-        return self._data.get(name, default)
 
 class Config:
     def __init__(self):
